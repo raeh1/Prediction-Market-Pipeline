@@ -1,6 +1,8 @@
 from dotenv import load_dotenv
 import os, psycopg2
 import extract, transform
+from datetime import datetime
+from zoneinfo import ZoneInfo
 
 load_dotenv()
 
@@ -56,7 +58,7 @@ def polymarket_create_snapshots_table():
     cur.close()
     conn.close()
 
-def polymarket_write_market_table():
+def polymarket_write_markets_table():
     conn, cur = polymarket_connection()
     events = extract.get_events()
     seen_ids = set()
@@ -83,6 +85,7 @@ def polymarket_write_market_table():
     conn.commit()
     cur.close()
     conn.close()
+    print(f"Data written to markets table at {datetime.now(ZoneInfo('America/New_York'))}")
 
 def polymarket_write_snapshots_table():
     conn, cur = polymarket_connection()
@@ -111,3 +114,4 @@ def polymarket_write_snapshots_table():
     conn.commit()
     cur.close()
     conn.close()
+    print(f"Data written to snapshots table at {datetime.now(ZoneInfo('America/New_York'))}")
