@@ -1,4 +1,4 @@
-from datetime import datetime
+from dateutil.parser import parse
 import json
 
 def polymarket_get_event_details(event):
@@ -15,10 +15,10 @@ def polymarket_get_market_details(market):
     question = market.get("question")
     start_date = market.get("startDate")
     if start_date:
-        start_date = datetime.fromisoformat(start_date.replace("Z", "+00:00"))
+        start_date = parse(start_date)
     end_date = market.get("endDate")
     if end_date:
-        end_date = datetime.fromisoformat(end_date.replace("Z", "+00:00"))
+        end_date = parse(end_date)
     return market_id, question, start_date, end_date
 
 def polymarket_get_market_snapshots(market):

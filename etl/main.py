@@ -6,7 +6,11 @@ def main():
             executor1.submit(load.polymarket_create_markets_table),
             executor1.submit(load.polymarket_create_snapshots_table)
         ]
-        concurrent.futures.wait(futures1)
+        for future in futures1:
+            try:
+                future.result()
+            except Exception as e:
+                print(f"Error during writing: {e}")
 
     with concurrent.futures.ThreadPoolExecutor() as executor2:
         futures2 = [
