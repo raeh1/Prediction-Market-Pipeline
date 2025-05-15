@@ -13,7 +13,11 @@ def main():
             executor2.submit(load.polymarket_write_markets_table),
             executor2.submit(load.polymarket_write_snapshots_table)
         ]
-        concurrent.futures.wait(futures2)
+        for future in futures2:
+            try:
+                future.result()
+            except Exception as e:
+                print(f"Error during writing: {e}")
 
 if __name__ == "__main__":
     main()
