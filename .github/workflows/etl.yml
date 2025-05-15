@@ -25,10 +25,9 @@ jobs:
 
       - name: Run ETL pipeline
         env: 
-          POLYMARKET_HOST: ${secrets.POLYMARKET_HOST}$
-          POLYMARKET_DATABASE: ${secrets.POLYMARKET_DATABASE}$
-          POLYMARKET_USER: ${secrets.POLYMARKET_USER}$
-          POLYMARKET_PASSWORD: ${secrets.POLYMARKET_PASSWORD}$
-          POLYMARKET_PORT: ${secrets.POLYMARKET_PORT}$
-
+          POLYMARKET_HOST: ${{secrets.POLYMARKET_HOST}}
+          POLYMARKET_DATABASE: ${{secrets.POLYMARKET_DATABASE}}
+          POLYMARKET_USER: ${{secrets.POLYMARKET_USER}}
+          POLYMARKET_PASSWORD: ${{secrets.POLYMARKET_PASSWORD}}
+          POLYMARKET_PORT: ${{secrets.POLYMARKET_PORT}}
         run: python etl/main.py
