@@ -23,7 +23,7 @@ def polymarket_create_events_table():
         event_id INT PRIMARY KEY,
         description TEXT,
         tags TEXT[],
-        comments TEXT,
+        comments INT,
         start_date TIMESTAMP,
         revelant BOOLEAN);
     """ 
