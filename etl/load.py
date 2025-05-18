@@ -21,6 +21,7 @@ def polymarket_create_events_table():
     cur.execute(
     """CREATE TABLE IF NOT EXISTS events (
         event_id INT PRIMARY KEY,
+        title TEXT,
         description TEXT,
         tags TEXT[],
         comments INT,
@@ -38,18 +39,19 @@ def polymarket_write_events_table():
     seen_ids = set()
     for event in events:
         event_id = transform.polymarket_get_event_id(event)
-        description, tags, comments, start_date = transform.polymarket_get_event_details(event)
+        title, description, tags, comments, start_date = transform.polymarket_get_event_details(event)
         seen_ids.add(event_id)
         try:
             cur.execute(
             """
-            INSERT INTO events (event_id, description, tags, comments, start_date, revelant) VALUES (%s, %s, %s, %s, %s, %s) ON CONFLICT (event_id) DO UPDATE SET
+            INSERT INTO events (event_id, title, description, tags, comments, start_date, revelant) VALUES (%s, %s, %s, %s, %s, %s, %s) ON CONFLICT (event_id) DO UPDATE SET
+                title = EXCLUDED.title,
                 description = EXCLUDED.description,
                 tags = EXCLUDED.tags,
                 comments = EXCLUDED.comments,
                 start_date = EXCLUDED.start_date,
                 revelant = EXCLUDED.revelant
-            """, (event_id, description, tags, comments, start_date, True)
+            """, (event_id, title, description, tags, comments, start_date, True)
             )
         except Exception as e:
             print(f"Failed to load event{event_id}: {e}")

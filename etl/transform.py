@@ -11,6 +11,7 @@ def polymarket_get_markets(event):
     return event.get("markets")
 
 def polymarket_get_event_details(event):
+    title = event.get("title")
     description = event.get("description")
     tags = []
     all_tags = event.get("tags")
@@ -20,7 +21,7 @@ def polymarket_get_event_details(event):
     start_date = event.get("startDate")
     if start_date:
         start_date = parse(start_date)
-    return description, tags, comments, start_date
+    return title, description, tags, comments, start_date
 
 def polymarket_get_market_details(market):
     question = market.get("question")
