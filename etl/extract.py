@@ -1,6 +1,6 @@
-import exceptions
 import requests
 from urllib.parse import urljoin
+from exceptions import Fetch_event_exception
 
 class Extractor:
     @classmethod
@@ -15,5 +15,5 @@ class Polymarket_extractor(Extractor):
     def get_events(cls):
         events = requests.get(urljoin(cls.polymarket_gammaAPI, cls.polymarket_urlModifier))
         if not events.ok:
-            raise exceptions.EventsFetchException(f"Failed to fetch Polymarket events: {events.status_code} - {events.text}")
+            raise Fetch_event_exception(f"Failed to fetch Polymarket events: {events.status_code} - {events.text}")
         return events.json()

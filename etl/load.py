@@ -1,6 +1,7 @@
 from dotenv import load_dotenv
 from extract import Polymarket_extractor
 from transform import Polymarket_transformer
+from exceptions import Database_connection_exception
 import os, psycopg2
 from datetime import datetime
 from zoneinfo import ZoneInfo
@@ -10,13 +11,16 @@ load_dotenv()
 class Loader:
     @classmethod
     def create_connection(cls, host, dbname, user, password, port):
-        conn = psycopg2.connect(
-            host = host,
-            dbname = dbname,
-            user = user,
-            password = password,
-            port = port
-        )
+        try:
+            conn = psycopg2.connect(
+                host = host,
+                dbname = dbname,
+                user = user,
+                password = password,
+                port = port
+            )
+        except Exception:
+            raise Database_connection_exception(f"Failed to connect to database {dbname}, verify your credentials!")
         return conn, conn.cursor()
 
     @classmethod

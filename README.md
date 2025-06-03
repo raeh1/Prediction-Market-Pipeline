@@ -26,4 +26,4 @@ POLYMARKET_PORT = your database port
 ```
 
 ## Function
-Use a cron job all other scheduling methods to run etl/main.py routinely
+Use a cron job or other scheduling methods to run etl/main.py routinely

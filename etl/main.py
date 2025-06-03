@@ -12,7 +12,7 @@ def main():
             try:
                 future.result()
             except Exception as e:
-                print(f"Error during writing: {e}")
+                print(f"Error during creating table: {e}")
 
     with concurrent.futures.ThreadPoolExecutor() as executor2:
         futures2 = [
@@ -24,7 +24,7 @@ def main():
             try:
                 future.result()
             except Exception as e:
-                print(f"Error during writing: {e}")
+                print(f"Error during writing to table: {e}")
 
 if __name__ == "__main__":
     main()
