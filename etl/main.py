@@ -1,11 +1,12 @@
-import concurrent.futures, load
+from load import Polymarket_loader
+import concurrent.futures
 
 def main():
     with concurrent.futures.ThreadPoolExecutor() as executor1:
         futures1 = [
-            executor1.submit(load.polymarket_create_events_table),
-            executor1.submit(load.polymarket_create_markets_table),
-            executor1.submit(load.polymarket_create_snapshots_table)
+            executor1.submit(Polymarket_loader.create_events_table),
+            executor1.submit(Polymarket_loader.create_markets_table),
+            executor1.submit(Polymarket_loader.create_snapshots_table)
         ]
         for future in futures1:
             try:
@@ -15,9 +16,9 @@ def main():
 
     with concurrent.futures.ThreadPoolExecutor() as executor2:
         futures2 = [
-            executor2.submit(load.polymarket_write_events_table),
-            executor2.submit(load.polymarket_write_markets_table),
-            executor2.submit(load.polymarket_write_snapshots_table)
+            executor2.submit(Polymarket_loader.write_events_table),
+            executor2.submit(Polymarket_loader.write_markets_table),
+            executor2.submit(Polymarket_loader.write_snapshots_table)
         ]
         for future in futures2:
             try:
